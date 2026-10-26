@@ -41,7 +41,9 @@ function Header() {
   const { favs, bag, setBagOpen } = useStore()
   const navigate = useNavigate()
   const loc = useLocation()
-  useEffect(() => setOpen(false), [loc.pathname, loc.search])
+  useEffect(() => {
+    setOpen(false)
+  }, [loc.pathname, loc.search])
   const bagN = bag.reduce((a, b) => a + b.qty, 0)
   return (
     <header className="top">
@@ -119,7 +121,11 @@ function Toast() {
 
 export default function Layout() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+  // Llaves obligatorias: en Chrome reciente scrollTo devuelve una promesa,
+  // y React trataría ese valor como función de limpieza.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
   return (
     <>
       <UtilBar />
